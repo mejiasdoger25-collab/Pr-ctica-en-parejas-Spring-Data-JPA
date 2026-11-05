@@ -7,4 +7,8 @@ public class ComentarioServicio {
 
     private final ComentarioServicio comentarioServicio;
 
+    public int contar(){
+        return 1;
+    }
+
 }
