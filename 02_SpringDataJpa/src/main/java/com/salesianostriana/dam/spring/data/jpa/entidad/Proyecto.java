@@ -1,13 +1,12 @@
 package com.salesianostriana.dam.spring.data.jpa.entidad;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -42,4 +41,22 @@ public class Proyecto {
     public final int hashCode() {
         return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
     }
+
+    @OneToMany (
+            mappedBy = "proyecto_id",
+            orphanRemoval = false
+    )
+    @Builder.Default
+    private List<Tarea> listaTareas = new ArrayList<>();
+
+    public void agregarTarea (Tarea tarea) {
+        this.listaTareas.add(tarea);
+        tarea.setProyecto(this);
+    }
+
+    public void eliminarTarea (Tarea tarea) {
+        this.listaTareas.remove(tarea);
+        tarea.setProyecto(null);
+    }
+
 }

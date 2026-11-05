@@ -1,12 +1,11 @@
 package com.salesianostriana.dam.spring.data.jpa.entidad;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -44,5 +43,26 @@ public class Tarea {
     }
 
 
+    @ManyToOne
+    private Proyecto proyecto;
+
+
+    @OneToMany (
+            mappedBy = "tarea_id",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @Builder.Default
+    private List<Comentario> listaComentaios = new ArrayList<>();
+
+    public void agregarTarea (Comentario comentario) {
+        this.listaComentaios.add(comentario);
+        comentario.setTarea(this);
+    }
+
+    public void eliminarTarea (Comentario comentario) {
+        this.listaComentaios.remove(comentario);
+        comentario.setTarea(null);
+    }
 
 }
