@@ -8,3 +8,4 @@ public class EtiquetaServicio {
     private final EtiquetaServicio etiquetaServicio;
 
 }
+
