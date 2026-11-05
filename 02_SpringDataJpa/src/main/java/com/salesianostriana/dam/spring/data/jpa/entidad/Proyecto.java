@@ -21,7 +21,7 @@ import java.util.UUID;
 public class Proyecto {
 
     @Id @GeneratedValue (strategy = GenerationType.AUTO)
-    private UUID id;
+    private Long id;
 
     private String nombre;
 
